@@ -1,5 +1,11 @@
 import requests
 from datetime import datetime
+from requests.auth import HTTPBasicAuth
+import os
+print(os.environ)
+basic = HTTPBasicAuth('user', 'pass')
+requests.get('https://httpbin.org/basic-auth/user/pass', auth=basic)
+
 
 GENDER = "male"
 WEIGHT_KG = 64
@@ -7,6 +13,9 @@ HEIGHT_CM = 172
 AGE = 25
 APP_ID = "5d7e788b"
 API_KEY = "4d7546e84e2809c416d08abdd4e07a97"
+
+SH_USERNAME="alleluia"
+SH_PASSWORD="Password123%"
 
 nutrition_endpoint = "https://trackapi.nutritionix.com/v2/natural/exercise"
 sheety_endpoint = "https://api.sheety.co/7750c695b8c1e162e1f101796a478713/workoutTracking/workouts"
@@ -48,6 +57,8 @@ for exercise in result['exercises']:
         }
     }
 
-    sheet_response = requests.post(sheety_endpoint, json=sheet_input)
+    sheet_response = requests.post(sheety_endpoint,
+                                   json=sheet_input,
+                                   auth=(SH_USERNAME, SH_PASSWORD))
 
     print(sheet_response.text)
